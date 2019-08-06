@@ -125,4 +125,15 @@ html, body
     background #FFFFFF
     box-shadow 0 2px 13px 0 rgba(0, 0, 0, 0.08)
     border-radius 0 10px 0 0
+.error
+  position relative
+  input
+    border-color #e10000!important
+  &:after
+    content '輸入訊息錯誤'
+    position absolute
+    color #e10000
+    top calc(100% + 5px)
+    font-size 12px
+    left 0
 </style>

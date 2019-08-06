@@ -2,6 +2,7 @@
   <div class="card">
     <component class="img-wrapper"
       :is="card"
+      :class="card"
       :[card]="card==='unionPay'"></component>
     <div class="text">{{card | text}}</div>
   </div>

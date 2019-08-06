@@ -20,17 +20,21 @@ export enum Step {
 export default new Vuex.Store({
   state: {
     step: Step.Select,
-    category: Payment.none
+    payment: Payment.none,
+    mainPayment: ''
   },
   mutations: {
 
   },
   actions: {
-    stepTo ({ state }, step: Step, payment?: Payment) {
+    stepTo ({ state }, step: Step) {
       state.step = step
-      if (payment) {
-        state.category = payment
-      }
+    },
+    setPayment ({ state }, pm: Payment) {
+      state.payment = pm
+    },
+    setMainPayment ({ state }, mp: string) {
+      state.mainPayment = mp
     }
   }
 })
