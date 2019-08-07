@@ -25,17 +25,34 @@
           id="email">
       </div>
     </div>
+    <div class="group no-wrap">
+      <div>
+        <input type="checkbox" name="" id="">
+      </div>
+      <div class="word-wrap">
+        <div>請再次確認「訂單資訊」與「付款資訊」，付款完成後將發送通知信至您的 E-mail 信箱</div>
+        <div class="hint">第三方支付金流平台服務條款</div>
+      </div>
+    </div>
+    <button class="back" @click="$router.go(-1)">上一步</button>
+    <button class="confirm">確認付款</button>
   </div>
 </template>
 <script lang="ts">
 import Title from '@/components/PageTitle.vue'
 import { Vue, Component } from 'vue-property-decorator'
+import { Action } from 'vuex-class'
+import { Step } from '../store'
 @Component({
   components: { Title }
 })
 export default class WebAtm extends Vue {
   private emailIsError = false
   private selectNotSelect = false
+  @Action('stepTo') stepTo !: Function
+  mounted () {
+    this.stepTo(Step.PaymentInput)
+  }
 }
 </script>
 <style lang="stylus" scoped>
@@ -44,22 +61,19 @@ export default class WebAtm extends Vue {
   padding-top 38px
   box-sizing border-box
   font-family 'Noto Sans TC'
-.group
-  text-align left
-  select, input[type='text']
-    width 235px
-    height 34px
-    border-radius 5px
-    border 1px solid #979797
-    color #979797
-    margin-top 10px
-    &.after-input
-      color black
-  ol
-    padding-left 16px
-    margin-top 19px
-    font-size 14px
-    li
-      margin-top 5px
-      line-height 30px
+
+input[type="checkbox"]
+  border-radius 5px
+  border solid 1px #979797
+  margin-right 15px
+  background transparent
+  width 15px
+  height 15px
+.no-wrap
+  display flex
+.hint
+  color #969696
+  font-family 'Noto Sans TC'
+  font-size 14px
+
 </style>

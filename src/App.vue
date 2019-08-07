@@ -33,7 +33,7 @@
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-import { State } from 'vuex-class'
+import { State, Action } from 'vuex-class'
 import progress from '@/components/progress.vue'
 import { Step } from './store'
 @Component({
@@ -43,6 +43,10 @@ import { Step } from './store'
 })
 export default class App extends Vue {
   @State('step') step !: Step
+  @Action('stepTo') stepTo !: Function
+  mounted () {
+    this.stepTo(Step.PaymentInput)
+  }
 }
 </script>
 
@@ -136,4 +140,35 @@ html, body
     top calc(100% + 5px)
     font-size 12px
     left 0
+.group
+  text-align left
+  margin-bottom 30px
+  select, input[type='text'], input[type="email"], input[type=number]
+    width 235px
+    height 34px
+    border-radius 5px
+    border 1px solid #979797
+    color #979797
+    margin-top 10px
+    &.after-input
+      color black
+  ol
+    padding-left 16px
+    margin-top 19px
+    font-size 14px
+    li
+      margin-top 5px
+      line-height 30px
+button
+  border-radius 5px
+  padding 10px 18px
+  border unset
+  cursor pointer
+  &.back
+    float left
+    background-color #D5F5E9
+  &.confirm
+    background-color #36B996
+    color white
+    float right
 </style>

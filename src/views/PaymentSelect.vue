@@ -1,6 +1,6 @@
 <template>
   <div class="container"
-    @click.stop="mainPayment = ''">
+    @click.stop="() => mainPayment = ''">
     <Title>STEP1. 選擇付款方式</Title>
     <div class="select-wrap">
       <Card v-for="(pm, i) in pms"
@@ -19,7 +19,7 @@ import { Vue, Component } from 'vue-property-decorator'
 import Card from '@/components/PaymentWrapper.vue'
 import Title from '@/components/PageTitle.vue'
 import { Action, State } from 'vuex-class'
-import { Payment } from '../store'
+import { Payment, Step } from '../store'
 
 const types = Object.freeze(['creditcard',
   'unionPay',
@@ -35,6 +35,7 @@ export default class PaymentSelect extends Vue {
   private mainPayment = ''
 
   @State('payment') payment!: Payment
+  @Action('stepTo') stepTo!: Function
   @Action('setPayment') setPayment!: (payment: Payment) => void
   @Action('setMainPayment') setMainPayment!: (mp: string) => void
 
@@ -49,6 +50,10 @@ export default class PaymentSelect extends Vue {
     this.setMainPayment(card)
     this.mainPayment = card
   }
+  mounted () {
+    this.stepTo(Step.Select)
+  }
+
   routerTo () {
     if (this.payment === Payment.CreditCard) {
       this.$router.push({ name: 'creditcard' })
