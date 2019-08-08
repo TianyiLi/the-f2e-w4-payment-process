@@ -35,7 +35,7 @@
       </div>
     </div>
     <button class="back" @click="$router.go(-1)">上一步</button>
-    <button class="confirm">確認付款</button>
+    <button class="confirm" @click="$router.push('/finish')">確認付款</button>
   </div>
 </template>
 <script lang="ts">

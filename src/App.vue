@@ -2,12 +2,14 @@
   <div id="app">
     <div class="left-side">
       <div class="mbl-btn">訂單資訊</div>
-      <div class="finish">
-        <span class="up-line"></span>
-        <span>Finish</span>
-        <span class="bottom-line"></span>
-      </div>
-      <div class="side-list">
+      <transition name="slide">
+        <div class="finish" v-if="isFinish">
+          <span class="up-line"></span>
+          <span class="text">Finish</span>
+          <span class="bottom-line"></span>
+        </div>
+      </transition>
+      <div class="side-list" :class="isFinish ? 'on-finish' : '' ">
         <div class="title">訂單資訊</div>
         <div>
           <div class="sub-title">商品名稱：</div>
@@ -22,7 +24,8 @@
           <div class="content">NT$ 600</div>
         </div>
       </div>
-      <button class="back"
+      <button class="back-to-shop"
+        v-show="!isFinish"
         @click.stop="$router.push('/')">返回商店</button>
     </div>
     <div class="main-page">
@@ -45,7 +48,10 @@ export default class App extends Vue {
   @State('step') step !: Step
   @Action('stepTo') stepTo !: Function
   mounted () {
-    this.stepTo(Step.PaymentInput)
+    this.stepTo(Step.Select)
+  }
+  get isFinish () {
+    return this.step === Step.Finish
   }
 }
 </script>
@@ -73,24 +79,50 @@ html, body
     z-index -1
     background-size 70px
     background-color #defff2
-.mbl-btn, .finish
+.mbl-btn
   display none
 .left-side
   display inline-block
   width 234px
-  .back
+  margin-top 120px
+  position relative
+  .back-to-shop
     background-color #4b4b4b
     border-radius 5px
     text-align center
     height 40px
-    width 89px
     margin-top 24px
     color white
     font-size 14px
     font-weight 700
     border none
+  .finish
+    position absolute
+    top 0
+    left 0
+    height 100%
+    width 100%
+    display flex
+    flex-direction column
+    justify-content center
+    align-items flex-end
+    font-family 'Noto Sans TC'
+    padding-right 50px
+    font-weight bold
+    box-sizing border-box
+    .text
+      font-size 20px
+    .up-line, .bottom-line
+      height 2px
+      width 14px
+      background-color #000
+    .up-line
+      margin-bottom 17px
+      transform rotate(45deg)
+    .bottom-line
+      margin-top 17px
+      transform rotate(-45deg)
   .side-list
-    margin-top 120px
     background-color #f3f3f3
     border-radius 10px 0 0 10px
     width 100%
@@ -101,6 +133,12 @@ html, body
     flex-direction column
     align-items flex-start
     font-family 'Noto Sans TC'
+    transition-delay .5s
+    transition .5s
+    &.on-finish
+      transition-delay 0
+      z-index -1
+      transform translateX(214px)
     .title
       font-size 18px
       font-weight 700
@@ -121,6 +159,7 @@ html, body
   width 628px
   display inline-block
   text-align center
+  z-index 1
   .main-ctn
     width 100%
     box-sizing border-box
@@ -171,4 +210,12 @@ button
     background-color #36B996
     color white
     float right
+.slide-enter-active
+  transition .5s
+  transition-delay .3s
+.slide-leave-active
+  transition .5s
+.slide-enter, .slide-leave-to
+  transform translateX(200)
+  opacity 0
 </style>

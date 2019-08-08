@@ -19,40 +19,50 @@
       </div>
       <div class="group">
         <label class="title">信用卡卡號：</label>
-        <div class="creditcard-input">
-          <input type="number"
-            min="0"
-            max="9999"
-            v-model="inputValue[0]"
-            @input="num => onInput(1)()"
-            ref="col-1"
-            class="card-ele">
-          <span>-</span>
-          <input type="number"
-            min="0"
-            max="9999"
-            v-model="inputValue[1]"
-            @input="num => onInput(2)()"
-            ref="col-2"
-            class="card-ele">
-          <span>-</span>
-          <input type="number"
-            min="0"
-            max="9999"
-            v-model="inputValue[2]"
-            @input="num => onInput(3)()"
-            ref="col-3"
-            class="card-ele">
-          <span>-</span>
-          <input type="number"
-            min="0"
-            max="9999"
-            ref="col-4"
-            v-model="inputValue[3]"
-            @input="num => onInput(4)()"
-            class="card-ele">
+        <div class="card-input-wrap">
+
+          <div class="creditcard-input">
+            <input type="number"
+              min="0"
+              max="9999"
+              v-model="inputValue[0]"
+              @input="num => onInput(1)()"
+              ref="col-1"
+              class="card-ele">
+            <span>-</span>
+            <input type="number"
+              min="0"
+              max="9999"
+              v-model="inputValue[1]"
+              @input="num => onInput(2)()"
+              ref="col-2"
+              class="card-ele">
+            <span>-</span>
+            <input type="number"
+              min="0"
+              max="9999"
+              v-model="inputValue[2]"
+              @input="num => onInput(3)()"
+              ref="col-3"
+              class="card-ele">
+            <span>-</span>
+            <input type="number"
+              min="0"
+              max="9999"
+              ref="col-4"
+              v-model="inputValue[3]"
+              @input="num => onInput(4)()"
+              class="card-ele">
+          </div>
+          <div class="card-is">
+            <img src="@/assets/visa.svg"
+              alt="">
+            <img src="@/assets/mastercard.svg"
+              alt="">
+            <img src="@/assets/jcb.svg"
+              alt="">
+          </div>
         </div>
-        <div class="card-is"></div>
       </div>
       <div class="group">
         <label for="date-valid">有效年月：</label><br>
@@ -68,6 +78,7 @@
           class="three"
           name=""
           id="security-code">
+        <img width="35" height="25" src="@/assets/back-three.svg" alt="">
       </div>
       <div class="group">
         <label for="email">填寫付款人信箱 :</label><br>
@@ -87,8 +98,8 @@
         </div>
       </div>
     </div>
-    <button class="back">上一步</button>
-    <button class="confirm">確認付款</button>
+    <button class="back" @click="$router.go(-1)">上一步</button>
+    <button class="confirm" @click="$router.push('/finish')">確認付款</button>
   </div>
 </template>
 <script lang="ts">
@@ -130,6 +141,16 @@ label
   display flex
 .group
   margin-top 30px
+  img
+    vertical-align middle
+  .card-input-wrap
+    margin-top 10px
+    display flex
+    flex-wrap nowrap
+    justify-content flex-start
+    align-items center
+    input
+      margin-top 0
 input[type=number], input[type=text]
   height 34px
 select
@@ -151,6 +172,14 @@ input[type=number]
     width 93px
 label
   font-size 1px
+.card-is
+  display flex
+  justify-content center
+  align-items center
+  margin-left 21px
+  img
+    width 41.4px
+    height 25px
 input[type=radio]
   appearance none
   display inline-block
