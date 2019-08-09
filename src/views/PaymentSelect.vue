@@ -58,9 +58,9 @@ export default class PaymentSelect extends Vue {
     if (this.payment === Payment.CreditCard) {
       this.$router.push({ name: 'creditcard' })
     } else if (this.payment === Payment.Shop) {
-      this.$router.push({ name: 'web-atm' })
-    } else {
       this.$router.push({ name: 'shop' })
+    } else {
+      this.$router.push({ name: 'web-atm' })
     }
   }
 }

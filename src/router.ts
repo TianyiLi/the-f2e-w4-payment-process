@@ -31,6 +31,17 @@ export default new Router({
       path: '/finish',
       name: 'finish',
       component: () => import(/* webpackChunkName: "finish" */ './views/Finish.vue')
+    },
+    {
+      path: '/finish-shop',
+      name: 'finishshop',
+      component: () => import(/* webpackChunkName: "finish-shop" */ './views/FinishShop.vue')
     }
-  ]
+  ],
+  scrollBehavior (to, from, savedPosition) {
+    return {
+      x: 0,
+      y: 0
+    }
+  }
 })

@@ -73,4 +73,7 @@ export default {
     fill #fff
   .text
     color white
+@media (max-width 767px)
+  .card
+    width 35vw
 </style>

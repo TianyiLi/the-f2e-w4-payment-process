@@ -1,15 +1,20 @@
 <template>
   <div id="app">
-    <div class="left-side">
+    <div class="left-side"
+      v-if="!isFinish"
+      @click="() => sidebarActive = !sidebarActive"
+      :class="sidebarActive ? 'is-active' : ''">
       <div class="mbl-btn">訂單資訊</div>
       <transition name="slide">
-        <div class="finish" v-if="isFinish">
+        <div class="finish"
+          v-if="isFinish">
           <span class="up-line"></span>
           <span class="text">Finish</span>
           <span class="bottom-line"></span>
         </div>
       </transition>
-      <div class="side-list" :class="isFinish ? 'on-finish' : '' ">
+      <div class="side-list"
+        :class="isFinish ? 'on-finish' : '' ">
         <div class="title">訂單資訊</div>
         <div>
           <div class="sub-title">商品名稱：</div>
@@ -30,7 +35,7 @@
     </div>
     <div class="main-page">
       <step-progress :step="'step' + step"></step-progress>
-        <router-view class="main-ctn" />
+      <router-view class="main-ctn" />
     </div>
   </div>
 </template>
@@ -47,6 +52,7 @@ import { Step } from './store'
 export default class App extends Vue {
   @State('step') step !: Step
   @Action('stepTo') stepTo !: Function
+  private sidebarActive = false
   mounted () {
     this.stepTo(Step.Select)
   }
@@ -85,6 +91,7 @@ html, body
   display inline-block
   width 234px
   margin-top 120px
+  font-family 'Noto Sans TC'
   position relative
   .back-to-shop
     background-color #4b4b4b
@@ -106,7 +113,6 @@ html, body
     flex-direction column
     justify-content center
     align-items flex-end
-    font-family 'Noto Sans TC'
     padding-right 50px
     font-weight bold
     box-sizing border-box
@@ -133,8 +139,8 @@ html, body
     flex-direction column
     align-items flex-start
     font-family 'Noto Sans TC'
-    transition-delay .5s
-    transition .5s
+    transition-delay 0.5s
+    transition 0.5s
     &.on-finish
       transition-delay 0
       z-index -1
@@ -164,14 +170,14 @@ html, body
     width 100%
     box-sizing border-box
     padding-top 38px
-    min-height calc(100vh - 120px)
+    height calc(100vh - 120px)
     background #FFFFFF
     box-shadow 0 2px 13px 0 rgba(0, 0, 0, 0.08)
     border-radius 0 10px 0 0
 .error
   position relative
   input
-    border-color #e10000!important
+    border-color #e10000 !important
   &:after
     content '輸入訊息錯誤'
     position absolute
@@ -182,7 +188,7 @@ html, body
 .group
   text-align left
   margin-bottom 30px
-  select, input[type='text'], input[type="email"], input[type=number]
+  select, input[type='text'], input[type='email'], input[type=number]
     width 235px
     height 34px
     border-radius 5px
@@ -210,12 +216,65 @@ button
     background-color #36B996
     color white
     float right
+    &[disabled='disabled']
+      background-color rgba(#36b996, 0.7)
 .slide-enter-active
-  transition .5s
-  transition-delay .3s
+  transition 0.5s
+  transition-delay 0.3s
 .slide-leave-active
-  transition .5s
+  transition 0.5s
 .slide-enter, .slide-leave-to
   transform translateX(200)
   opacity 0
+[class^='error']
+  position absolute
+  font-size 12px
+  color red
+input, select
+  &[error='true']
+    border-color #e10000 !important
+@media (max-width: 767px)
+  .app
+    position relative
+    width 100vw
+    overflow-x hidden
+  .left-side
+    position fixed
+    margin-top 60px
+    left 0
+    z-index 5
+    transition 0.2s
+    transform translateX(calc(-100%))
+    .side-list
+      box-shadow unset
+    &.is-active
+      transform translateX(0)
+      .side-list
+        box-shadow 0px 2px 13px 0 rgba(0, 0, 0, 0.8)
+      .mbl-btn
+        box-shadow 5px 2px 5px 0 rgba(0, 0, 0, 0.8)
+    .side-list
+      border-radius 0 0px 10px 0
+    .mbl-btn
+      box-shadow 0px 2px 5px 0 rgba(0, 0, 0, 0.8)
+      background-color #f3f3f3
+      padding 0.5em
+      border-radius 0 10px 10px 0
+      position absolute
+      display inline-block
+      left 100%
+      top 0
+      width 16px
+    .back-to-shop
+      display none
+  .main-page
+    width 100vw
+    margin 0 auto
+    margin-bottom 22.5vh
+    .main-ctn
+      height auto
+      display inline-block
+      padding-bottom 50px !important
+      select, input[type='text'], input[type='email']
+        width 100%
 </style>
